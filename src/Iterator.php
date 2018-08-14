@@ -52,7 +52,7 @@ final class Iterator implements \IteratorAggregate
             new RecursiveArrayIterator(
                 new EmptyIterator()
             ),
-            '',
+            "\0", // invalid path, just so shouldIgnorePath() doesn't complain that it doesn't have a value for $this->basedir
             $this->config,
             $this->ruleSet
         ));

@@ -23,8 +23,11 @@ final class Filter extends FilterIterator
         $re = new ReflectionMethod($filter, 'shouldProcessFile');
         $re->setAccessible(true);
 
-        $this->callback = function () use ($it, $filter, $re) {
-            return $re->invoke($filter, $it->current());
+        $pa = new ReflectionMethod($filter, 'shouldIgnorePath');
+        $pa->setAccessible(true);
+
+        $this->callback = function () use ($it, $filter, $re, $pa) {
+            return $re->invoke($filter, $it->current()) && !$pa->invoke($filter, $it->current());
         };
     }
 
